@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,15 +22,20 @@ public class StarRailLoading : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI txt_Title;
     [SerializeField] TextMeshProUGUI txt_Text;
+    [SerializeField] TextMeshProUGUI txt_LocalizeText;
+    [SerializeField] TextMeshProUGUI txt_WorldText;
+    [SerializeField] TextMeshProUGUI txt_UID;
     [SerializeField] Image img_Icon;
     [SerializeField] Button btn_Click;
-
+    private long playerUID = 103584110;
     void Start()
     {
         nowWold = 0;
         nowLocalize = LocalizeType.Kor;
         nowData = SData.GetStarrailWorldData(1001);
         RefreshUI();
+        btn_Click.onClick.AddListener(RefreshTextUI);
+        txt_UID.text = $"UID : {playerUID}";
     }
 
     public void ChangeWorld()
@@ -86,12 +92,16 @@ public class StarRailLoading : MonoBehaviour
                 {
                     txt_Title.text = nowData.Title_KR;
                     txt_Text.text = nowData.Text_Kr;
+                    txt_WorldText.text = "지역 이동";
+                    txt_LocalizeText.text = "언어 변경";
                 }
                 break;
             case LocalizeType.En:
                 {
                     txt_Title.text = nowData.Title_En;
                     txt_Text.text = nowData.Text_En;
+                    txt_WorldText.text = "Warp\nWorld";
+                    txt_LocalizeText.text = "Change\nLanguage";
                 }
                 break;
             default:
